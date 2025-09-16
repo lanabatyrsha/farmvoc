@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Farm Animal Sounds</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url("farm_background.jpg") no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    h1 {
+      margin: 30px;
+      color: #fff;
+      text-shadow: 2px 2px 8px #000;
+      font-size: 56px;
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 60px;
+      margin-top: 50px;
+    }
+    .animal {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .animal img {
+      width: 300px;
+      height: 300px;
+      object-fit: contain;
+      border-radius: 25px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+      background: #fff;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .animal img:hover {
+      transform: scale(1.1);
+    }
+    .animal button {
+      margin-top: 20px;
+      padding: 18px 40px;
+      font-size: 32px;
+      font-weight: bold;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      background: #ffcc00;
+      color: #333;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+      transition: transform 0.2s, background 0.3s;
+    }
+    .animal button:hover {
+      transform: scale(1.1);
+      background: #ffdb4d;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐮 Welcome to the Farm 🐔</h1>
+
+  <div class="buttons">
+    <div class="animal">
+      <img src="cat.png" alt="Cat" onclick="playSound('cat')">
+      <button onclick="playSound('cat')">Cat 🐱</button>
+    </div>
+    <div class="animal">
+      <img src="dog.gif" alt="Dog" onclick="playSound('dog')">
+      <button onclick="playSound('dog')">Dog 🐶</button>
+    </div>
+    <div class="animal">
+      <img src="duck.png" alt="Duck" onclick="playSound('duck')">
+      <button onclick="playSound('duck')">Duck 🦆</button>
+    </div>
+    <div class="animal">
+      <img src="cow.gif" alt="Cow" onclick="playSound('cow')">
+      <button onclick="playSound('cow')">Cow 🐮</button>
+    </div>
+  </div>
+
+  <!-- Animal sounds -->
+  <audio id="cat" src="cat.mp3"></audio>
+  <audio id="dog" src="dog.mp3"></audio>
+  <audio id="duck" src="duck.mp3"></audio>
+  <audio id="cow" src="cow.mp3"></audio>
+
+  <!-- Word pronunciation -->
+  <audio id="catWord" src="cat_word.mp3"></audio>
+  <audio id="dogWord" src="dog_word.mp3"></audio>
+  <audio id="duckWord" src="duck_word.mp3"></audio>
+  <audio id="cowWord" src="cow_word.mp3"></audio>
+
+  <script>
+    let currentAudio = null;
+    let currentWord = null;
+
+    function stopAll() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+      }
+      if (currentWord) {
+        currentWord.pause();
+        currentWord.currentTime = 0;
+        currentWord = null;
+      }
+    }
+
+    function playSound(animal) {
+      stopAll();
+
+      let sound = document.getElementById(animal);
+      let word = document.getElementById(animal + "Word");
+
+      if (sound) {
+        currentAudio = sound;
+        sound.play();
+
+        sound.onended = () => {
+          if (word) {
+            currentWord = word;
+            word.play();
+          }
+        };
+      }
+    }
+  </script>
+</body>
+</html>
